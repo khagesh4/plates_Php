@@ -5,5 +5,5 @@ USER nobody
 COPY doc /var/www/documents/
 COPY src /var/www/src/
 COPY vendor /var/www/vendor/
-COPY web /var/www/html/
+COPY . /var/www/html/
 EXPOSE 8080/tcp
