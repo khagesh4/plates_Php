@@ -1,19 +1,8 @@
-FROM composer as vendor
-
-WORKDIR /tmp/
-
-COPY composer.json composer.json
-COPY composer.lock composer.lock
-
-RUN composer install \
-    --ignore-platform-reqs \
-    --no-interaction \
-    --no-plugins \
-    --no-scripts \
-    --prefer-dist
-
-
-FROM php:7.2-apache-stretch
-
-COPY . /var/www/html
-COPY --from=vendor /tmp/vendor/ /var/www/html/vendor/
+FROM trafex/php-nginx
+USER root
+RUN apk add --no-cache php81-pdo-php81-pdo_mysql
+USER nobody
+COPY scr /var/www/src/
+COPY vendor /var/www/vendor/
+COPY web /var/www/html/
+EXPOSE 8080/tcp
